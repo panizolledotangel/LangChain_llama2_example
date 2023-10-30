@@ -6,11 +6,11 @@ Repositorio con el codigo de la charla "Descubriendo el Poder de ​ Langchain: 
   
 # Acceso LLama-2
 
-1. Rellena el formulario de la [https://ai.meta.com/llama/#download-the-model](Pagina de Meta). Usa el mismo correo de tu cuenta de [https://huggingface.co/](HuggingFace).
+1. Rellena el formulario de la pagina de [https://ai.meta.com/llama/#download-the-model](Meta). Usa el mismo correo de tu cuenta de [https://huggingface.co/](HuggingFace).
 2. Una vez te hayan dado el OK del formulario anterior, entra en HuggingFace y pide acceso al modelo que quieras usar. 
-   a. [https://huggingface.co/meta-llama/Llama-2-7b-chat-hf](7B)
-   b. [https://huggingface.co/meta-llama/Llama-2-13b-chat-hf](13B)
-   c. [https://huggingface.co/meta-llama/Llama-2-70b-chat-hf](70B)
+    a. [https://huggingface.co/meta-llama/Llama-2-7b-chat-hf](7B)
+    b. [https://huggingface.co/meta-llama/Llama-2-13b-chat-hf](13B)
+    c. [https://huggingface.co/meta-llama/Llama-2-70b-chat-hf](70B)
 3. Tardan unas horas, te indicaran que te han dado acceso en la seccion del modelo que hayas elegido en la web de HuggingFace.
 
 # Preparar las variables de entorno
