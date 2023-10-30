@@ -1,0 +1,26 @@
+version: "3"
+services:
+  notebook:
+      build:
+        context: ./dockerimg
+        dockerfile: ./Dockerfile
+        args:
+          UID: ${UID}
+          GID: ${GID}
+          USER: ${USER}
+      volumes:
+        - ./volume:/home/${USER}/host_data
+      environment:
+        - HUGGING_TOKEN=${HUGGING_TOKEN}
+      ports:
+        - "8898:8888"
+      expose:
+        - "8898"
+      shm_size: '100gb'
+      deploy:
+        replicas: 1
+        resources:
+          reservations:
+            devices:
+             - driver: nvidia
+               capabilities: [gpu]
