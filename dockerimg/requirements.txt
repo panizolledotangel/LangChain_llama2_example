@@ -3,3 +3,5 @@ scipy
 boilerpy3
 unstructured
 markdown
+sentence-transformers
+faiss-cpu
