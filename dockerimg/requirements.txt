@@ -5,3 +5,4 @@ unstructured
 markdown
 sentence-transformers
 faiss-cpu
+pandas

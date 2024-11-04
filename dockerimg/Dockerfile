@@ -1,12 +1,14 @@
-FROM nvidia/cuda:12.0.1-devel-ubuntu22.04
+FROM nvidia/cuda:12.2.2-devel-ubuntu22.04
 
 ARG UID=1000
 ARG GID=1000
 ARG USER=angel
+ARG JUPYTER_PASSWORD="langchain2024"
 
 RUN apt-get update
 RUN apt-get install -y python3
 RUN apt-get install -y python3-pip
+RUN apt-get install -y curl
 
 RUN ln -s /usr/bin/python3 /usr/bin/python
 
@@ -15,19 +17,21 @@ RUN adduser --disabled-password --gecos '' --uid $UID --gid $GID $USER
 
 USER $USER
 WORKDIR /home/$USER
-WORKDIR /home/$USER
 
 USER root
 
 RUN pip3 install torch
+RUN curl -fsSL https://ollama.com/install.sh | sh
 RUN pip install -qU \
     scipy \
-    transformers==4.31.0 \
-    accelerate==0.21.0 \
-    einops==0.6.1 \
-    langchain==0.0.240 \
-    xformers==0.0.20 \
-    bitsandbytes==0.41.0
+    transformers \
+    accelerate \
+    einops \
+    langchain \
+    langchain-community \
+    langchain-ollama \
+    xformers \
+    bitsandbytes
 
 RUN pip3 install jupyter
 RUN pip3 install jupyterlab
@@ -36,7 +40,15 @@ COPY requirements.txt .
 RUN pip3 install -r requirements.txt
 
 RUN pip3 install --upgrade langchain
+RUN pip3 install langgraph
+RUN pip3 install tavily-python
+RUN pip3 install langchain_huggingface
 
 USER $USER
 
-CMD ["bash", "-c", "source /etc/bash.bashrc && python -m jupyter lab --ip 0.0.0.0 --no-browser"]
+RUN jupyter-lab --generate-config
+RUN echo "c.ServerApp.password='$(python3 -c "from jupyter_server.auth import passwd; print(passwd('$JUPYTER_PASSWORD'))")'" >> ~/.jupyter/jupyter_lab_config.py
+
+RUN echo "#!/bin/bash\n ollama serve &\n source /etc/bash.bashrc\n jupyter lab --ip 0.0.0.0 --no-browser" > .entrypoint.sh
+RUN chmod +x .entrypoint.sh
+CMD ["./.entrypoint.sh"]

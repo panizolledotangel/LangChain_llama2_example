@@ -8,10 +8,13 @@ services:
           UID: ${UID}
           GID: ${GID}
           USER: ${USER}
+          JUPYTER_PASSWORD: ${JUPYTER_PASSWORD}
       volumes:
         - ./volume:/home/${USER}/host_data
       environment:
         - HUGGING_TOKEN=${HUGGING_TOKEN}
+        - TAVILY_API_KEY=${TAVILY_API_KEY}
+        - OLLAMA_MODELS=/home/${USER}/host_data/.cache/.ollama
       ports:
         - "${PORT}:8888"
       expose:
